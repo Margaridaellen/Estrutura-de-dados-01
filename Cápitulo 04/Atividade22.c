@@ -36,7 +36,7 @@ void lerpartidas(const char *nome) {
     int c = 0;
     int lido;
 
-    printf("\n=== | Histórico de Partidas | ===\n");
+    printf("\n Histórico de Partidas\n");
 
     while (fgets(l, sizeof(l), arquivo) != NULL) {
         lido = sscanf(l, "%d %49s %d", &x.id, x.jogador, &x.pontuacao);
@@ -46,14 +46,13 @@ void lerpartidas(const char *nome) {
             printf("[%d] ID: %d | Jogador: %-15s | Pontuação: %d\n", c, x.id, x.jogador, x.pontuacao);
         }
         else {
-            printf("[AVISO] Linha ignorada por conter dados malformados: %s", l);
+            printf("Linha ignorada por conter dados malformados: %s", l);
         }
     }
     
     if (c == 0) {
         printf("O histórico está vazio ou não possui registros válidos.\n");
     } else {
-        printf("----------------------------------------\n");
         printf("Total de registros lidos: %d\n", c);
     }
 
