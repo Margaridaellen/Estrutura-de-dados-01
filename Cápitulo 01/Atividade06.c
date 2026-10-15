@@ -1,7 +1,9 @@
 #include <stdio.h>
+//valor
 int tm=10;
 int vm=100;
 
+//alteração por indireção
 void ganhovida(int *v){
   *v = *v+ 5;
   printf("|Você ganhou 5 pontos de vida extra!\n|Sua vida agora é: %d \n \n",*v);
@@ -40,6 +42,7 @@ void mostrar_mapa(const int *mapa, int tamanho) {
     }
 }
 
+//Aritmétrica de ponteiro
 void explorar_mapa(const int *mapa, int tamanho) {
     printf("\nExplorando o mapa!\n");
     for (int i = 0; i < tamanho; i++) {
@@ -72,6 +75,7 @@ void mostrarporvetor(char* inventario[], int tam) {
     }
 }
 
+//Endereço
 void alterarporponteiro(char* inventario[], int tam) {
     int pos;
     printf("|Digite a posicao que deseja alterar(0 a 2): ");
@@ -95,6 +99,7 @@ int main() {
 
 // Usando ponteiros do tipo int* para compatibilidade com as funções
  
+//Ponteiro
     int *ptr_vida=&vida;
     int *ptr_tesouro=&tesouro_ativo;
     int *ptr_p=&pontuacao_total;
@@ -106,6 +111,7 @@ int main() {
 
     int tamanho, mapa[tm];
 
+    //parâmetro de função
     char mapao[30] = "Fase 1";
 
     char item0[20] = "Pocao de cura ";

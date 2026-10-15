@@ -115,6 +115,8 @@ int main() {
     mostrar_mapa(mapa, tamanho);
     explorar_mapa(mapa, tamanho);
 
+
+
     return 0;
      
 }
