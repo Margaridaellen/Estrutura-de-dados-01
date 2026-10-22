@@ -7,6 +7,7 @@ typedef enum {
     ts
 } Tdado;
 
+//Void:Não pssui um tipo definido, podendo ser utilizado para todos os tipo
 void mostrar(const void *ptr, Tdado tipo) {
     if (ptr == NULL) {
         printf("Ponteiro nulo.\n");
@@ -31,6 +32,7 @@ void liberar(void **ptr_lugar) {
     if (ptr_lugar == NULL || *ptr_lugar == NULL) {
         return; 
     }
+    //Free:Libera um bloco de memória que foi alocado anteriormente
     free(*ptr_lugar);   
     *ptr_lugar = NULL; 
 }
@@ -74,10 +76,13 @@ float pontuacao(int *n, int *p) {
     return 0;
 }
 
-//Matriz linear: Sua memória aloca um único bloco, possui  maior velocidade e eficiência, e é mais simples possuindo um único free.
+//Matriz linear/bloco único: Sua memória aloca um único bloco, possui  maior velocidade e eficiência 
+//É mais simples possuindo um único free.
 void linear(int l, int c) {
     if (l <= 0 || c <= 0) return;
 
+    //Malloc: Aloca a quantidade de byts na memória
+    //Sizeof: Usado para retornar o tamanho em bytes de um dado
     int *m = (int*) malloc(l * c * sizeof(int));
     if (!m) return;
 
@@ -98,10 +103,11 @@ void linear(int l, int c) {
     free(m);
 }
 
-//Matriz ponteiro de ponteiro:Aloca um vetor de ponteiros e depois cada linha separadamente, ocorre maior fragmentação da memória e é necessário liberar linha por linha
+//Matriz ponteiro de ponteiro:Aloca um vetor de ponteiros e depois cada linha separadamente
+//ocorre maior fragmentação da memória e é necessário liberar linha por linha.
+
 void pp(int l1, int c1) {
     if (l1 <= 0 || c1 <= 0) return;
-
     int **m = (int**) malloc(l1 * sizeof(int*));
     if (!m) return;
 
@@ -170,6 +176,8 @@ int main(void) {
         printf("Digite o seu nome:");
         scanf("%s", n[i]);
 
+        //string
+        //Copia o conteúdo do apelido
         strcpy(nbusca[i], n[i]);
 
         printf("Ola! Para prosseguir com a aventura adote um apelido:");
@@ -182,6 +190,7 @@ int main(void) {
         scanf("%s", s1);
         
         if (strcmp(s, s1) == 0) {
+            //string:Agrupa origem e final
             printf("Cadastro realizado com sucesso!\n");
         } else {
             printf("Erro, realize o cadastro novamente\n");
@@ -192,6 +201,7 @@ int main(void) {
     scanf("%s", ne);
 
     for (int i = 0; i < na; i++) {
+    
         strcat(n[i], " - "); 
         strcat(n[i], ne);   
         printf("Integrante %d: %s\n", i + 1, n[i]);
@@ -204,6 +214,7 @@ int main(void) {
     scanf("%s", aa);
 
     for (int i = 0; i < na; i++) {
+        // String - Pesquisa de jogador
         if (strcmp(nbusca[i], aa) == 0) {
             printf("Jogador %s encontrado na posicao %d! (Cadastro completo: %s)\n\n", nbusca[i], i + 1, n[i]);
             encontrado = 1;
@@ -232,7 +243,7 @@ int main(void) {
             m[i0][j0] = 0; 
         }
     }
-
+    //Mariz fixa -- Decrala a matriz utilizando os valores dos ponteiros
     for (int i0 = 0; i0 < *pl; i0++) {
         for (int j0 = 0; j0 < *pc; j0++) {
             printf("Digite o valor da posicao [%d][%d]:", i0, j0);
@@ -270,6 +281,7 @@ int main(void) {
         printf("Digite a coluna que deseja alterar:");
         scanf("%d", &nc);
 
+        //Trabalhando a matriz para alterar um elemento específico
         if (nl >= 1 && nl <= l && nc >= 1 && nc <= c) {
             printf("Digite o novo valor da posicao [%d][%d]: ", nl, nc);
             scanf("%d", &m[nl - 1][nc - 1]);

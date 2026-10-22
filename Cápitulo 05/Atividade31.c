@@ -15,12 +15,14 @@ int contador_busca = 0;
 int fibonacci_ingenuo(int n) {
     contador_fib++;
     
+    //Caso-base: Condição de parada usada para impedir a função recursiva de entrar em um loop infinito
     if (n == 0) return 0;
     if (n == 1) return 1;
     
     return fibonacci_ingenuo(n - 1) + fibonacci_ingenuo(n - 2);
 }
 
+//Busca binária recursiva: Implementada através de chamadas de função encadeadas passando os novos limites
 int busca_binaria_recursiva(int vetor[], int inicio, int fim, int chave) {
     contador_busca++;
     
@@ -153,6 +155,8 @@ bool ordenado(int vetor[],int n){
     return true;
 }
 
+//Busca binária iterativa:Inclui verificação de ordenação do vetor com ordenado() 
+//imprime o rastreio visual do intervalo de busca a cada iteração.
 int buscabinaria(int vetor[],int n, int alvo, int *comparar){
     int inicio = 0;
     int fim = n-1;
@@ -190,6 +194,7 @@ int buscabinaria(int vetor[],int n, int alvo, int *comparar){
     return -1; 
 }
 
+//A função recebe um vetor e chama busca linear e busca binaria para o mesmo alvo, comparando indíces e retornando quantidade de comparações
 void teste(int vetor[],int tamanho,int alvo,const char *c){
     int l=0,b=0;
 
@@ -217,6 +222,8 @@ int pares(int vetor[],int n, int alvo){
     return comparacao;
 }
 
+//Contadores de custo: Foi usado para medir o custo de tempo e execução
+//com os campos acesso e comparacao.
 int acesso(int vetor[], int tam, int indice, c *co){
    
     co->comparacao++;
@@ -287,8 +294,11 @@ int main() {
         c cnt_maior = {0, 0};
 
         int iteste = n / 2;
+
+        //O(1): Custo constante
         acesso(v, n, iteste, &cnt_direto);
 
+        //O(n):Pecorre todo o vetor com custo linear
         maior(v, n, &cnt_maior);
 
         printf("|Tamanho do vetor %d|\n", n);
@@ -311,6 +321,8 @@ int main() {
                 vetor[l]=l+1;       
             }
 
+            //O(n^2):  código imprime no console a fórmula da soma aritmética n(n-1)/2 e calcula a razão entre as comparações reais 
+            //demonstrando experimentalmente o comportamento 
             int comp = pares(vetor, n, alvo);
             int teorico = (int)n * (n - 1) / 2;
             double razao = (double)comp / ((double)n * n);
@@ -319,6 +331,7 @@ int main() {
         }
 
         //Q28
+        // O(log n): Na busca binária,ocorre a redução de espaço de busca pela metade
         resultado = buscabinaria(vetor, n, 23, &comparacoes);
 
         if (resultado != -1) {

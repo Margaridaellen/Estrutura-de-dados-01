@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct{
     int acesso;
     int comparacao;
 }c;
+
 
 //Q27
 int pares(int vetor[],int n, int alvo){

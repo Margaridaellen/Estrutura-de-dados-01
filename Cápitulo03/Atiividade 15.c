@@ -1,16 +1,35 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
-
+#define NOME 40
 
 struct personagem{
-    char nome [30];
+    char nome [NOME];
     int vida;
     int pontuacao;
     float pos1;
     float pos2;
     int id;
+    int nivel;
+    int ataque;
 };
+
+personagem novo_personagem(char *nome, int nivel, int vida, int ataque){
+    Personagem p = { .nivel = nivel, .vida = vida, .ataque = ataque };
+    strncpy(p.nome, nome, NOME-1);
+    p.nome[NOME - 1] = '\0';
+    return p;
+}
+
+void nomeeguro(personagem *p){
+    printf("Digite um novo nome para o personagem:");
+    scanf("%39s", p->nome);
+}
+
+void exibir (personagem p){
+    printf("\n[Personagem] Nome: %s | Nivel: %d | Vida: %d | Ataque: %d\n", p.nome, p.nivel, p.vida, p.ataque);
+}
 
 int main(){
     size_t ca = 0;
@@ -89,6 +108,12 @@ int main(){
     printf("Estado alterado do jogador\n");
     printf("ID: %d | Nome: %s | Vida: %d | Pontos: %d | Posição: (%.1f, %.1f)\n",
            p1.id, p1.nome, p1.vida, p1.pontuacao, p1.pos1, p1.pos2);
+
+    Personagem p2 = criar_personagem("Maria", 5, 250, 45);
+    exibir_personagem(p2);
+
+    nomeseguro(&p2);
+    exibir(p2);
 
     return 0;
 

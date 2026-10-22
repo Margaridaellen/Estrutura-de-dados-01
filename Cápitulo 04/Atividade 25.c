@@ -31,6 +31,7 @@ void salvarpartidas(const char *nome_arquivo, const Partida *partidas, int t) {
         return;
     }
 
+    //wb:subescrever dados binários
     FILE *arquivo = fopen(nome_arquivo, "wb");
     if (!arquivo) {
         printf("Erro ao abrir o arquivo para escrita.\n");
@@ -74,8 +75,10 @@ void salvarpartidas(const char *nome_arquivo, const Partida *partidas, int t) {
 }
 
 int lerpartidas(const char *nome, Partida **partidas, int *qtd) {
+    //rb: Ler binário
     FILE *arquivo = fopen(nome, "rb");
 
+    //caso arquivo inexistente  
     if (arquivo == NULL) {
         printf("O histórico esta vazio ou o arquivo não foi encontrado.\n");
         return 0;
@@ -223,7 +226,9 @@ void comparar_partidas(const Partida *origem, const Partida *rest, int qtd) {
 }
 
 // Questão 20
+//Conversão de arquivo de texto: r para w
 void processar(const char *origem, const char *destino) {
+    // r:Ler modo texto
     FILE *f_origem = fopen(origem, "r");
     if (f_origem == NULL) {
         fprintf(stderr, "Erro ao tentar abrir arquivo na origem: %s\n", origem);
@@ -240,6 +245,7 @@ void processar(const char *origem, const char *destino) {
     Partida p;
     int registrosprocessados = 0;
 
+    //Testando arquivos e e erros
     while (fscanf(f_origem, "%d %f", &p.id, &p.pontuacao) == 2) {
         p.pontuacao *= BONUS;
         fprintf(f_destino, "%d %.2f \n", p.id, p.pontuacao);
@@ -252,6 +258,7 @@ void processar(const char *origem, const char *destino) {
 }
 
 void arquivo(const char *caminho) {
+    //w:Subescrever modo texto
     FILE *f = fopen(caminho, "w");
     if (f != NULL) {
         fprintf(f, "100 000.0 \n"); 
@@ -276,7 +283,7 @@ int main() {
         printf("2. Listar partidas\n");
         printf("3. Salvar em arquivo\n");
         printf("4. Carregar do arquivo\n");
-        printf("5. Executar teste de comparacao e processamento (Q20 / Q24)\n");
+        printf("5. Executar teste de comparacao e processamento\n");
         printf("0. Sair\n");
         printf("Escolha uma opcao: ");
 
@@ -302,17 +309,22 @@ int main() {
                 lerpartidas(caminho_arquivo, &partidas, &quantidade);
                 break;
             
+            //salvar e recarregar vetor em formato binário
             case 5: {
                 // Teste de gravação, leitura e comparação dinâmicos
+                
+                //vetor
                 Partida historico1[3] = {
                     {0, "Maria", 100.0f, strdup("Fase_1")},
                     {1, "Ana",   20.0f,  strdup("Fase_2")},
                     {2, "Jose",  50.0f,  strdup("Fase_3")}
                 };
 
+                //salva o vetor dinâmico
                 printf("\nGravando em binário\n");
                 salvarpartidas("teste_temp.bin", historico1, 3);
 
+                //recarrega o arquivo binário para o vetor dinâmico
                 Partida *historico_restaurado = NULL;
                 int qtd_restaurada = 0;
                 lerpartidas("teste_temp.bin", &historico_restaurado, &qtd_restaurada);
