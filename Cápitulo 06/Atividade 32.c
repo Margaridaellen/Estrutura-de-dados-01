@@ -1,0 +1,104 @@
+#include <stdio.h>
+#include <string.h>
+
+typedef struct {
+    int id;
+    char nome[60];
+    int pont;
+}jogador;
+
+int comp=0;
+int troca=0;
+
+int menor(int vetor [], int inicio, int n ){
+    int menorindice=inicio;
+    for(int i=inicio+1; i<n;i++){
+        comp++;
+        if (vetor[i]<vetor[menorindice]){
+            menorindice=i;
+        }
+    }
+    return menorindice;
+}
+
+//selection sort
+void ordenacao(int vetor[], int n){
+    for(int i=0; i<n-1;i++){
+        int m=menor(vetor,i,n);
+        if (m != i){
+            int temp= vetor [i]; 
+            vetor[i]=vetor[m];
+            vetor[m]=temp;
+            troca++;
+        }
+    }
+}
+
+int vencedor (jogador a, jogador b){
+    comp++;
+    if (a.pont != b.pont) return a.pont > b.pont;
+
+    comp ++;
+    int c= strcmp(a.nome, b.nome);
+    if(c!=0) return c<0;
+
+    comp++;
+    return a.id< b.id;
+}
+
+int melhor(jogador v[], int inicio, int n){
+    int m= inicio;
+    for(int i= inicio +1; i <n; i++){
+        if (vencedor(v[i], v[m])) m=i;
+    }
+    return m;
+}
+
+void ordenarjogadores(jogador v[], int n){
+    for (int i = 0; i < n - 1; i++) {
+        int m= melhor(v,i,n);
+        if (m!=i){
+            jogador temp = v[i]; v[i] = v[m]; v[m] = temp;
+            troca++;
+        }
+    }
+}
+
+int main (){
+    int num []= {50,20,30,40};
+    int n[4];
+
+    for(int i = 0; i < 4; i++) n[i] = num[i];
+
+    comp = 0;
+    troca = 0;
+    ordenacao(n,4);
+
+    printf("|Números ordenados|\n");
+    for(int i = 0; i < 4; i++){
+        printf("%d ", n[i]);
+    }
+    printf("\nComparações: %d  - Trocas %d \n",comp,troca);
+
+    jogador jogoriginais[]={
+        {1, "Carlos", 100},
+        {2, "Maria", 150},
+        {3, "Ana", 200}
+    };
+    jogador jogCopia[3];
+
+    for(int i = 0; i < 3; i++){
+        jogCopia[i] = jogoriginais [i];
+    }
+
+    comp=0; troca=0; 
+    ordenarjogadores(jogCopia,3);
+
+    printf("| Jogadores ordenados |\n");
+    for (int i = 0; i < 3; i++) {
+        printf("Id: %d | Nome: %-6s | Pontos: %d\n", jogCopia[i].id, jogCopia[i].nome, jogCopia[i].pont);
+    }
+    printf("Comparações: %d | Trocas: %d\n", comp, troca);
+
+    return 0;
+}
